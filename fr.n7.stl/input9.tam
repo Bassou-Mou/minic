@@ -1,0 +1,29 @@
+;variable declaration: x
+PUSH 1
+LOADL 42
+STORE (1) 0[SB]
+;variable declaration: ptr
+PUSH 1
+LOADA 0[SB]
+STORE (1) 1[SB]
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@61baa894
+;PRINT instruction for: * ptr
+LOAD (1) 1[SB]
+LOADI (1)
+SUBR IOut
+LOADL 10
+SUBR COut
+;(*ptr) = 100;
+
+LOADL 100
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@490d6c15
+LOAD (1) 1[SB]
+STOREI (1)
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@7d4793a8
+;PRINT instruction for: x
+LOAD (1) 0[SB]
+SUBR IOut
+LOADL 10
+SUBR COut
+HALT
+

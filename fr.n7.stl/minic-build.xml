@@ -1,0 +1,51 @@
+<project name="MiniCCompiler" default="compile" basedir=".">
+
+	<property name="java" location="src" />
+	<property name="classes" location="bin/cls" />
+	<property name="result" location="bin/jar" />
+	<property name="lib" location="lib" />
+	<property name="tools" location="tools" />
+	<property name="base" location="." />
+
+
+    <path id="libraries">
+        <fileset dir="${tools}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="generate">
+        <mkdir dir="${java}/fr/n7/stl/minic/parser"/>
+        <java classname="org.antlr.v4.Tool" fork="true">
+            <classpath>
+                <pathelement location="tools/antlr-4.13.1-complete.jar"/>
+            </classpath>
+
+            <arg value="-o"/>
+            <arg value="${java}/fr/n7/stl/minic/parser"/>
+            <arg value="MiniCLexer.g4"/>
+            <arg value="MiniCParser.g4"/>
+        </java>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${classes}" />
+        <mkdir dir="${result}" />
+
+        <javac srcdir="${java}" destdir="${classes}" includeantruntime="false" >
+            <classpath refid="libraries"/>
+        </javac>
+        <javac includeantruntime="false"
+               srcdir="${java}"
+               destdir="${classes}"
+               source="17"
+               target="17">
+            <classpath refid="libraries" />
+        </javac>
+    </target>
+
+    <target name="clean">
+        <delete dir="${classes}" />
+        <delete dir="${result}" />
+    </target>
+</project>

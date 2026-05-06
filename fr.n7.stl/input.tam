@@ -1,0 +1,9 @@
+;variable declaration: i
+LOADL 0
+STORE (1) 0[SB]
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@63e31ee
+;variable declaration: j
+LOAD (1) 0[SB]
+STORE (1) 1[SB]
+HALT
+
