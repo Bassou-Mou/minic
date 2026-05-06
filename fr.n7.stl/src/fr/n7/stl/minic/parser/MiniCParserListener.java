@@ -235,17 +235,29 @@ public interface MiniCParserListener extends ParseTreeListener {
 	 */
 	void exitEtiquettes(MiniCParser.EtiquettesContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code typeAtomic}
+	 * Enter a parse tree produced by the {@code typeEnum}
 	 * labeled alternative in {@link MiniCParser#type}.
 	 * @param ctx the parse tree
 	 */
-	void enterTypeAtomic(MiniCParser.TypeAtomicContext ctx);
+	void enterTypeEnum(MiniCParser.TypeEnumContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code typeAtomic}
+	 * Exit a parse tree produced by the {@code typeEnum}
 	 * labeled alternative in {@link MiniCParser#type}.
 	 * @param ctx the parse tree
 	 */
-	void exitTypeAtomic(MiniCParser.TypeAtomicContext ctx);
+	void exitTypeEnum(MiniCParser.TypeEnumContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code typeArray}
+	 * labeled alternative in {@link MiniCParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypeArray(MiniCParser.TypeArrayContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code typeArray}
+	 * labeled alternative in {@link MiniCParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypeArray(MiniCParser.TypeArrayContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code typeNamed}
 	 * labeled alternative in {@link MiniCParser#type}.
@@ -271,6 +283,18 @@ public interface MiniCParserListener extends ParseTreeListener {
 	 */
 	void exitTypeCouple(MiniCParser.TypeCoupleContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code typeAtomic}
+	 * labeled alternative in {@link MiniCParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypeAtomic(MiniCParser.TypeAtomicContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code typeAtomic}
+	 * labeled alternative in {@link MiniCParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypeAtomic(MiniCParser.TypeAtomicContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code typeRecord}
 	 * labeled alternative in {@link MiniCParser#type}.
 	 * @param ctx the parse tree
@@ -282,18 +306,6 @@ public interface MiniCParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTypeRecord(MiniCParser.TypeRecordContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code typeEnum}
-	 * labeled alternative in {@link MiniCParser#type}.
-	 * @param ctx the parse tree
-	 */
-	void enterTypeEnum(MiniCParser.TypeEnumContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code typeEnum}
-	 * labeled alternative in {@link MiniCParser#type}.
-	 * @param ctx the parse tree
-	 */
-	void exitTypeEnum(MiniCParser.TypeEnumContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code affectableArray}
 	 * labeled alternative in {@link MiniCParser#affectable}.

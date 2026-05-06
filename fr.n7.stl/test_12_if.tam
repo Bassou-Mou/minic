@@ -1,0 +1,29 @@
+;variable declaration: x
+PUSH 1
+LOADL 7
+STORE (1) 0[SB]
+;variable declaration: res
+PUSH 1
+LOADL 0
+STORE (1) 1[SB]
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@12bc6874
+;(x > 5)
+;IF statement with condition: (x > 5)
+LOAD (1) 0[SB]
+LOADL 5
+SUBR IGtr
+JUMPIF (0) end_if_1
+; res  = 1;
+
+LOADL 1
+STORE (1) 1[SB]
+POP (0) 0
+end_if_1
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@763d9750
+;PRINT instruction for: res
+LOAD (1) 1[SB]
+SUBR IOut
+LOADL 10
+SUBR COut
+HALT
+

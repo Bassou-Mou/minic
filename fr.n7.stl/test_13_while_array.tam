@@ -1,0 +1,85 @@
+;variable declaration: t
+PUSH 1
+LOADL 5
+LOADL 1
+SUBR IMul
+SUBR MAlloc
+STORE (1) 0[SB]
+;variable declaration: i
+PUSH 1
+LOADL 0
+STORE (1) 1[SB]
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@5fe5c6f
+;(i < 5)
+debut_boucle_1
+LOAD (1) 1[SB]
+LOADL 5
+SUBR ILss
+JUMPIF (0) fin_boucle_1
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@3ac42916
+;(i * i)
+; t [ i ] = (i * i);
+
+LOAD (1) 1[SB]
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@47d384ee
+LOAD (1) 1[SB]
+SUBR IMul
+LOAD (1) 0[SB]
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@2d6a9952
+LOAD (1) 1[SB]
+SUBR IAdd
+STOREI (1)
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@22a71081
+;(i + 1)
+; i  = (i + 1);
+
+LOAD (1) 1[SB]
+LOADL 1
+SUBR IAdd
+STORE (1) 1[SB]
+JUMP debut_boucle_1
+fin_boucle_1
+;variable declaration: somme
+PUSH 1
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@3930015a
+;(t[ 0 ] + t[ 1 ])
+;((t[ 0 ] + t[ 1 ]) + t[ 2 ])
+;(((t[ 0 ] + t[ 1 ]) + t[ 2 ]) + t[ 3 ])
+;((((t[ 0 ] + t[ 1 ]) + t[ 2 ]) + t[ 3 ]) + t[ 4 ])
+LOAD (1) 0[SB]
+LOADL 0
+SUBR IAdd
+LOADI (1)
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@629f0666
+LOAD (1) 0[SB]
+LOADL 1
+SUBR IAdd
+LOADI (1)
+SUBR IAdd
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@1bc6a36e
+LOAD (1) 0[SB]
+LOADL 2
+SUBR IAdd
+LOADI (1)
+SUBR IAdd
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@1ff8b8f
+LOAD (1) 0[SB]
+LOADL 3
+SUBR IAdd
+LOADI (1)
+SUBR IAdd
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@387c703b
+LOAD (1) 0[SB]
+LOADL 4
+SUBR IAdd
+LOADI (1)
+SUBR IAdd
+STORE (1) 2[SB]
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@224aed64
+;PRINT instruction for: somme
+LOAD (1) 2[SB]
+SUBR IOut
+LOADL 10
+SUBR COut
+HALT
+

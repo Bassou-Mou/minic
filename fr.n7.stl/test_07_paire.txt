@@ -1,5 +1,5 @@
 void main() {
-    <int, boolean> p = <3, true>;
+    <int, boolean> p = <99, true>;
     int a = fst p;
     boolean b = snd p;
     print a;

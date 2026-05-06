@@ -1,0 +1,10 @@
+void main() {
+    int[] t = new int[5];
+    int i = 0;
+    while ((i < 5)) {
+        t[i] = i * i;
+        i = i + 1;
+    }
+    int somme = t[0] + t[1] + t[2] + t[3] + t[4];
+    print somme;
+}

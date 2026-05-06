@@ -1,0 +1,57 @@
+;variable declaration: t
+PUSH 1
+LOADL 3
+LOADL 1
+SUBR IMul
+SUBR MAlloc
+STORE (1) 0[SB]
+; t [ 0 ] = 10;
+
+LOADL 10
+LOAD (1) 0[SB]
+LOADL 0
+SUBR IAdd
+STOREI (1)
+; t [ 1 ] = 20;
+
+LOADL 20
+LOAD (1) 0[SB]
+LOADL 1
+SUBR IAdd
+STOREI (1)
+; t [ 2 ] = 30;
+
+LOADL 30
+LOAD (1) 0[SB]
+LOADL 2
+SUBR IAdd
+STOREI (1)
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@270421f5
+;PRINT instruction for: t[ 0 ]
+LOAD (1) 0[SB]
+LOADL 0
+SUBR IAdd
+LOADI (1)
+SUBR IOut
+LOADL 10
+SUBR COut
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@4f4a7090
+;PRINT instruction for: t[ 1 ]
+LOAD (1) 0[SB]
+LOADL 1
+SUBR IAdd
+LOADI (1)
+SUBR IOut
+LOADL 10
+SUBR COut
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@18ef96
+;PRINT instruction for: t[ 2 ]
+LOAD (1) 0[SB]
+LOADL 2
+SUBR IAdd
+LOADI (1)
+SUBR IOut
+LOADL 10
+SUBR COut
+HALT
+

@@ -5,7 +5,8 @@ import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.scope.Declaration;
 import fr.n7.stl.minic.ast.scope.HierarchicalScope;
 import fr.n7.stl.minic.ast.type.Type;
-
+import fr.n7.stl.minic.ast.type.*;
+import fr.n7.stl.util.Logger;
 /**
  * Common elements between left (Assignable) and right (Expression) end sides of assignments. These elements
  * share attributes, toString and getType methods.
@@ -47,16 +48,19 @@ public abstract class AbstractArray<ArrayKind extends Expression> implements Exp
 	 */
 	@Override
 	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "collect is undefined in Abstract Array.");
-	}
+        boolean ok = this.array.collectAndPartialResolve(_scope);
+        ok &= this.index.collectAndPartialResolve(_scope);
+        return ok;	}
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#resolve(fr.n7.stl.block.ast.scope.HierarchicalScope)
 	 */
-	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "resolve is undefined in Abstract Array.");
-	}
+    @Override
+    public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+        boolean ok = this.array.completeResolve(_scope);
+        ok &= this.index.completeResolve(_scope);
+        return ok;
+    }
 	
 	/**
 	 * Getter for the array field.
@@ -78,8 +82,14 @@ public abstract class AbstractArray<ArrayKind extends Expression> implements Exp
 	 * Synthesized Semantics attribute to compute the type of an expression.
 	 * @return Synthesized Type of the expression.
 	 */
-	public Type getType() {
-		throw new SemanticsUndefinedException( "getType is undefined in AbstractArray.");
-	}
+    @Override
+    public Type getType() {
+        Type arrayType = this.array.getType();
+        if (arrayType instanceof ArrayType) {
+            return ((ArrayType) arrayType).getType();
+        }
+        Logger.error("Expression '" + this.array + "' is not an array type.");
+        return AtomicType.ErrorType;
+    }
 
 }

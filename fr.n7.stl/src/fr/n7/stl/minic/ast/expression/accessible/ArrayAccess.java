@@ -28,9 +28,19 @@ public class ArrayAccess extends AbstractArray<AccessibleExpression> implements 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
-	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException( "getCode is undefined in ArrayAccess.");
-	}
+    @Override
+    public Fragment getCode(TAMFactory _factory) {
+        int elementSize = this.getType().length();
+        Fragment _result = _factory.createFragment();
+        _result.append(this.array.getCode(_factory));
+        _result.append(this.index.getCode(_factory));
+        if (elementSize > 1) {
+            _result.add(_factory.createLoadL(elementSize));
+            _result.add(fr.n7.stl.tam.ast.Library.IMul);
+        }
+        _result.add(fr.n7.stl.tam.ast.Library.IAdd);
+        _result.add(_factory.createLoadI(elementSize));
+        return _result;
+    }
 
 }

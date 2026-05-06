@@ -1,0 +1,27 @@
+;variable declaration: x
+PUSH 1
+LOADL 5
+STORE (1) 0[SB]
+;variable declaration: max
+PUSH 1
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@61baa894
+;(x > 3)
+LOAD (1) 0[SB]
+LOADL 3
+SUBR IGtr
+JUMPIF (0) cond_else_1
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@42f30e0a
+LOAD (1) 0[SB]
+JUMP cond_end_1
+cond_else_1
+LOADL 3
+cond_end_1
+STORE (1) 1[SB]
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@24273305
+;PRINT instruction for: max
+LOAD (1) 1[SB]
+SUBR IOut
+LOADL 10
+SUBR COut
+HALT
+

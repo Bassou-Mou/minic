@@ -1,6 +1,3 @@
-/**
- * 
- */
 package fr.n7.stl.minic.ast.expression.accessible;
 
 import fr.n7.stl.minic.ast.expression.AbstractAccess;
@@ -14,35 +11,35 @@ import fr.n7.stl.tam.ast.TAMFactory;
  * @author Marc Pantel
  */
 public class VariableAccess extends AbstractAccess {
-	
-	protected VariableDeclaration declaration;
-	
-	/**
-	 * Creates a variable use expression Abstract Syntax Tree node.
-	 * @param _name Name of the used variable.
-	 */
-	public VariableAccess(VariableDeclaration _declaration) {
-		this.declaration = _declaration;
-	}
-	
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.expression.AbstractUse#getDeclaration()
-	 */
-	public Declaration getDeclaration() {
-		return this.declaration;
-	}
 
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.expression.AbstractUse#getCode(fr.n7.stl.tam.ast.TAMFactory)
-	 */
-	public Fragment getCode(TAMFactory _factory) {
-		Fragment _result = _factory.createFragment();
-		_result.add(_factory.createLoad(
-				this.declaration.getRegister(), 
-				this.declaration.getOffset(),
-				this.declaration.getType().length()));
-		_result.addComment(this.toString());
-		return _result;
-	}
+    protected VariableDeclaration declaration;
 
+    /**
+     * Creates a variable use expression Abstract Syntax Tree node.
+     * @param _declaration The declaration of the variable being accessed.
+     */
+    public VariableAccess(VariableDeclaration _declaration) {
+        this.declaration = _declaration;
+    }
+
+    /* (non-Javadoc)
+     * @see fr.n7.stl.block.ast.expression.AbstractUse#getDeclaration()
+     */
+    public Declaration getDeclaration() {
+        return this.declaration;
+    }
+
+    /* (non-Javadoc)
+     * @see fr.n7.stl.block.ast.expression.AbstractUse#getCode(fr.n7.stl.tam.ast.TAMFactory)
+     */
+    @Override
+    public Fragment getCode(TAMFactory _factory) {
+        Fragment _result = _factory.createFragment();
+        _result.add(_factory.createLoad(
+                this.declaration.getRegister(),
+                this.declaration.getOffset(),
+                this.declaration.getType().length()));
+        _result.addComment(this.toString());
+        return _result;
+    }
 }

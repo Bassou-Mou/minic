@@ -1,0 +1,5 @@
+void main() {
+    const int TAILLE = 10;
+    int x = TAILLE * 2;
+    print x;
+}

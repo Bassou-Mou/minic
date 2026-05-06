@@ -74,6 +74,7 @@ etiquettes returns [List<LabelDeclaration> lesEtiquettes]:
 
 type returns [Type unType]:
     atomique #typeAtomic
+    | type CrochetOuvrant CrochetFermant #typeArray
     | Identificateur #typeNamed
     | Inferieur gauche=type Virgule droite=type Superieur #typeCouple
     | Enregistrement Identificateur AccoladeOuvrante champs+=champ+ AccoladeFermante #typeRecord

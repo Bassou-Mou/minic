@@ -254,13 +254,25 @@ public class MiniCParserBaseListener implements MiniCParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTypeAtomic(MiniCParser.TypeAtomicContext ctx) { }
+	@Override public void enterTypeEnum(MiniCParser.TypeEnumContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTypeAtomic(MiniCParser.TypeAtomicContext ctx) { }
+	@Override public void exitTypeEnum(MiniCParser.TypeEnumContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTypeArray(MiniCParser.TypeArrayContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTypeArray(MiniCParser.TypeArrayContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -290,6 +302,18 @@ public class MiniCParserBaseListener implements MiniCParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterTypeAtomic(MiniCParser.TypeAtomicContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTypeAtomic(MiniCParser.TypeAtomicContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterTypeRecord(MiniCParser.TypeRecordContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -297,18 +321,6 @@ public class MiniCParserBaseListener implements MiniCParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTypeRecord(MiniCParser.TypeRecordContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterTypeEnum(MiniCParser.TypeEnumContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitTypeEnum(MiniCParser.TypeEnumContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

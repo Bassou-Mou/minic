@@ -63,31 +63,45 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 			this.fields.add(_field);
 		}
 	}
+
+	/**
+	 * Get an iterator over the fields of the record type.
+	 * @return Iterator over the field declarations.
+	 */
+	public java.util.Iterator<FieldDeclaration> getFieldsIterator() {
+		return this.fields.iterator();
+	}
 	
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Type#equalsTo(fr.n7.stl.block.ast.Type)
 	 */
-	@Override
-	public boolean equalsTo(Type _other) {
-		throw new SemanticsUndefinedException( "compatibleWith is undefined in RecordType.");
-	}
+    @Override
+    public boolean equalsTo(Type _other) {
+        if (_other instanceof RecordType) {
+            RecordType other = (RecordType) _other;
+            return this.name.equals(other.name);
+        }
+        return false;
+    }
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Type#compatibleWith(fr.n7.stl.block.ast.Type)
 	 */
-	@Override
-	public boolean compatibleWith(Type _other) {
-		throw new SemanticsUndefinedException( "compatibleWith is undefined in RecordType.");
-	}
+    @Override
+    public boolean compatibleWith(Type _other) {
+        return this.equalsTo(_other);
+    }
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Type#merge(fr.n7.stl.block.ast.Type)
 	 */
-	@Override
-	public Type merge(Type _other) {
-		throw new SemanticsUndefinedException( "compatibleWith is undefined in RecordType.");
-	}
-
+    @Override
+    public Type merge(Type _other) {
+        if (this.equalsTo(_other)) {
+            return this;
+        }
+        return AtomicType.ErrorType;
+    }
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Scope#get(java.lang.String)
 	 */
@@ -179,6 +193,12 @@ public class RecordType implements Type, Declaration, Scope<FieldDeclaration> {
 		}
 		return _result + "}";
 	}
+    public void allocateFields() {
+        int offset = 0;
+        for (FieldDeclaration f : this.fields) {
+            offset += f.computerOffset(offset);
+        }
+    }
 	
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.type.Type#resolve(fr.n7.stl.block.ast.scope.Scope)

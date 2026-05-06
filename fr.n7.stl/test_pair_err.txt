@@ -1,5 +1,0 @@
-void main() {
-    <int, boolean> p = <3, true>;
-    boolean a = fst p;
-    print a;
-}

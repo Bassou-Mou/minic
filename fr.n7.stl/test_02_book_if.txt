@@ -1,0 +1,9 @@
+void main() {
+    int x = 8;
+    boolean pair = (x % 2) == 0;
+    if (pair) {
+        print x;
+    } else {
+        print 0;
+    }
+}

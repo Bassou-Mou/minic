@@ -218,6 +218,11 @@ public class ASTBuilder extends MiniCParserBaseListener {
     }
 
     @Override
+    public void exitTypeArray(TypeArrayContext ctx) {
+        ctx.unType = new ArrayType(ctx.type().unType);
+    }
+
+    @Override
     public void exitTypeNamed(TypeNamedContext ctx) {
         ctx.unType = new NamedType(ctx.Identificateur().getText());
     }
@@ -266,7 +271,9 @@ public class ASTBuilder extends MiniCParserBaseListener {
 
     @Override
     public void exitAffectableArray(AffectableArrayContext ctx) {
-        ctx.uneAffectable = new ArrayAssignment(ctx.affectable().uneAffectable, ctx.expression().uneExpression);
+        ctx.uneAffectable = new ArrayAssignment(
+                (AssignableExpression) ctx.affectable().uneAffectable,
+                ctx.expression().uneExpression);
     }
 
     @Override

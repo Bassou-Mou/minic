@@ -1,8 +1,0 @@
-int double(int x) {
-    return x + x;
-}
-
-void main() {
-    int r = double(true);
-    print r;
-}

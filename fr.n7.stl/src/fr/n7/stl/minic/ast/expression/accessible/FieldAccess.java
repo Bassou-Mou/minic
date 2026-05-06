@@ -3,11 +3,11 @@
  */
 package fr.n7.stl.minic.ast.expression.accessible;
 
-import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.AbstractField;
-import fr.n7.stl.minic.ast.expression.Expression;
 import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.TAMFactory;
+import fr.n7.stl.minic.ast.type.RecordType;
+import java.util.Iterator;
 
 /**
  * Implementation of the Abstract Syntax Tree node for accessing a field in a record.
@@ -28,9 +28,18 @@ public class FieldAccess extends AbstractField<AccessibleExpression> implements 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
-	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException( "getCode is undefined in FieldAccess.");
-	}
+    @Override
+    public Fragment getCode(TAMFactory _factory) {
+        Fragment _result = _factory.createFragment();
+        int fieldOffset = this.field.getOffset();
+        int fieldSize   = this.field.getType().length();
+        RecordType rt   = (RecordType) this.record.getType();
+        int totalSize   = rt.length();
+        int after       = totalSize - fieldOffset - fieldSize;
+        _result.append(this.record.getCode(_factory));
+        if (after > 0) _result.add(_factory.createPop(fieldSize, after));
+        if (fieldOffset > 0) _result.add(_factory.createPop(fieldSize, fieldOffset));
+        return _result;
+    }
 
 }

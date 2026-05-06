@@ -11,6 +11,7 @@ import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.minic.ast.type.AtomicType;
+import fr.n7.stl.minic.ast.type.ArrayType;
 import fr.n7.stl.tam.ast.Library;
 import fr.n7.stl.minic.ast.type.Type;
 import fr.n7.stl.tam.ast.TAMInstruction;
@@ -73,16 +74,11 @@ public class Printer implements Instruction {
 	}
     private TAMInstruction getRightOut(AtomicType atomicType) {
         switch (atomicType) {
-            case BooleanType:
-                return Library.BOut;
-            case IntegerType:
-                return Library.IOut;
-            case CharacterType:
-                return Library.COut;
-            case StringType:
-                return Library.SOut;
-            default:
-                return Library.IOut;
+            case BooleanType:  return Library.BOut;
+            case IntegerType:  return Library.IOut;
+            case CharacterType: return Library.COut;
+            case StringType:   return Library.SOut;
+            default:           return Library.IOut;
         }
     }
 	/* (non-Javadoc)
@@ -91,7 +87,7 @@ public class Printer implements Instruction {
     @Override
     public Fragment getCode(TAMFactory _factory) {
         Fragment _result = _factory.createFragment();
-        Type type = this.parameter.getType();
+        Type type = resolveBaseType(this.parameter.getType()); // ← traversée ArrayType
         _result.append(this.parameter.getCode(_factory));
         if (type instanceof AtomicType) {
             _result.add(getRightOut((AtomicType) type));
@@ -103,5 +99,10 @@ public class Printer implements Instruction {
         _result.addComment("PRINT instruction for: " + this.parameter);
         return _result;
     }
-
+    private Type resolveBaseType(Type type) {
+        while (type instanceof ArrayType) {
+            type = ((ArrayType) type).getType();
+        }
+        return type;
+    }
 }

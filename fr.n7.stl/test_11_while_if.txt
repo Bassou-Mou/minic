@@ -1,0 +1,13 @@
+void main() {
+    int somme = 0;
+    int i = 1;
+    while ((i <= 10)) {
+        if ((i % 2) == 0) {
+            somme = somme + i;
+        } else {
+            somme = somme + 0;
+        }
+        i = i + 1;
+    }
+    print somme;
+}

@@ -1,0 +1,8 @@
+int carre(int n) {
+    return n * n;
+}
+
+void main() {
+    int r = carre(7);
+    print r;
+}

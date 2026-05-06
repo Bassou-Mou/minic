@@ -14,6 +14,9 @@ import fr.n7.stl.tam.ast.Fragment;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.util.Logger;
+import fr.n7.stl.minic.ast.expression.assignable.VariableAssignment;
+import fr.n7.stl.minic.ast.expression.assignable.ArrayAssignment;
+import fr.n7.stl.minic.ast.expression.assignable.FieldAssignment;
 
 /**
  * Implementation of the Abstract Syntax Tree node for an array type.
@@ -22,47 +25,48 @@ import fr.n7.stl.util.Logger;
  */
 public class Assignment implements Instruction, Expression {
 
-	protected Expression value;
-	protected AssignableExpression assignable;
+    protected Expression value;
+    protected AssignableExpression assignable;
 
-	/**
-	 * Create an assignment instruction implementation from the assignable expression
-	 * and the assigned value.
-	 * @param _assignable Expression that can be assigned a value.
-	 * @param _value Value assigned to the expression.
-	 */
-	public Assignment(AssignableExpression _assignable, Expression _value) {
-		this.assignable = _assignable;
-		this.value = _value;
-		/* This attribute will be assigned to the appropriate value by the resolve action */
-	}
+    /**
+     * Create an assignment instruction implementation from the assignable expression
+     * and the assigned value.
+     *
+     * @param _assignable Expression that can be assigned a value.
+     * @param _value      Value assigned to the expression.
+     */
+    public Assignment(AssignableExpression _assignable, Expression _value) {
+        this.assignable = _assignable;
+        this.value = _value;
+        /* This attribute will be assigned to the appropriate value by the resolve action */
+    }
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return this.assignable + " = " + this.value.toString() + ";\n";
-	}
-	
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.HierarchicalScope)
-	 */
-	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return this.assignable + " = " + this.value.toString() + ";\n";
+    }
+
+    /* (non-Javadoc)
+     * @see fr.n7.stl.block.ast.instruction.Instruction#collect(fr.n7.stl.block.ast.scope.HierarchicalScope)
+     */
+    @Override
+    public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
         boolean _assignable = this.assignable.collectAndPartialResolve(_scope);
         boolean _value = this.value.collectAndPartialResolve(_scope);
         return _assignable && _value;
     }
-	
-	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
-		return this.collectAndPartialResolve(_scope);
-	}
 
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope.HierarchicalScope)
-	 */
+    @Override
+    public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope, FunctionDeclaration _container) {
+        return this.collectAndPartialResolve(_scope);
+    }
+
+    /* (non-Javadoc)
+     * @see fr.n7.stl.block.ast.instruction.Instruction#resolve(fr.n7.stl.block.ast.scope.HierarchicalScope)
+     */
     @Override
     public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
         boolean _assignableResolved = this.assignable.completeResolve(_scope);
@@ -70,15 +74,17 @@ public class Assignment implements Instruction, Expression {
         return _assignableResolved && _valueResolved;
     }
 
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.expression.Expression#getType()
-	 */
-	@Override
-	public Type getType() { return this.assignable.getType();}
+    /* (non-Javadoc)
+     * @see fr.n7.stl.block.ast.expression.Expression#getType()
+     */
+    @Override
+    public Type getType() {
+        return this.assignable.getType();
+    }
 
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.Instruction#checkType()
-	 */
+    /* (non-Javadoc)
+     * @see fr.n7.stl.block.ast.Instruction#checkType()
+     */
     @Override
     public boolean checkType() {
         boolean isTypeCompatible = this.value.getType().compatibleWith(this.assignable.getType());
@@ -91,22 +97,36 @@ public class Assignment implements Instruction, Expression {
 
         return isTypeCompatible;
     }
-	
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.Instruction#allocateMemory(fr.n7.stl.tam.ast.Register, int)
-	 */
-	@Override
-	public int allocateMemory(Register _register, int _offset) { return 0; }
 
-	/* (non-Javadoc)
-	 * @see fr.n7.stl.block.ast.Instruction#getCode(fr.n7.stl.tam.ast.TAMFactory)
-	 */
+    /* (non-Javadoc)
+     * @see fr.n7.stl.block.ast.Instruction#allocateMemory(fr.n7.stl.tam.ast.Register, int)
+     */
+    @Override
+    public int allocateMemory(Register _register, int _offset) {
+        return 0;
+    }
+
+    /* (non-Javadoc)
+     * @see fr.n7.stl.block.ast.Instruction#getCode(fr.n7.stl.tam.ast.TAMFactory)
+     */
     @Override
     public Fragment getCode(TAMFactory _factory) {
-        Fragment _fragment = this.value.getCode(_factory);
-        _fragment.append(this.assignable.getCode(_factory));
+        Fragment _fragment = _factory.createFragment();
+        _fragment.append(this.value.getCode(_factory));
+
+        if (this.assignable instanceof VariableAssignment) {
+            _fragment.append(this.assignable.getCode(_factory));
+        } else if (this.assignable instanceof ArrayAssignment) {
+            _fragment.append(this.assignable.getCode(_factory));
+            _fragment.add(_factory.createStoreI(this.value.getType().length()));
+        } else if (this.assignable instanceof FieldAssignment) {
+            _fragment.append(this.assignable.getCode(_factory));
+        } else {
+            _fragment.append(this.assignable.getCode(_factory));
+            _fragment.add(_factory.createStoreI(this.value.getType().length()));
+        }
+
         _fragment.addComment(this.toString());
         return _fragment;
     }
-
 }

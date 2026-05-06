@@ -1,0 +1,16 @@
+LOADL 10
+;variable declaration: x
+PUSH 1
+;(TAILLE * 2)
+LOADL 10
+LOADL 2
+SUBR IMul
+STORE (1) 0[SB]
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@b065c63
+;PRINT instruction for: x
+LOAD (1) 0[SB]
+SUBR IOut
+LOADL 10
+SUBR COut
+HALT
+
