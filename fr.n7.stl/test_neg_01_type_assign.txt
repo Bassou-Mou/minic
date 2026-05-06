@@ -1,0 +1,5 @@
+// ERREUR ATTENDUE : Assignment type error: cannot assign value of type boolean to int
+void main() {
+    int x = true;
+    print x;
+}

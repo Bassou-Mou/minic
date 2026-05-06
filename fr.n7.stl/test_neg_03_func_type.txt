@@ -1,0 +1,8 @@
+// ERREUR ATTENDUE : Function call error: Argument 1 type mismatch for 'carre'
+int carre(int n) {
+    return n * n;
+}
+void main() {
+    int r = carre(true);
+    print r;
+}

@@ -1,0 +1,5 @@
+// ERREUR ATTENDUE : Function foo has not been found
+void main() {
+    int r = foo(1);
+    print r;
+}

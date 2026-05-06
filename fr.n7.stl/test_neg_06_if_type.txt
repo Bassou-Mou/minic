@@ -1,0 +1,7 @@
+// ERREUR ATTENDUE : condition n'est pas un booléen
+void main() {
+    int x = 5;
+    if (x) {
+        print x;
+    }
+}

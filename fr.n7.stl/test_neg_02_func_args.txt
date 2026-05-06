@@ -1,0 +1,8 @@
+// ERREUR ATTENDUE : Function call error: Number of arguments does not match for 'carre'. Expected 1, got 2
+int carre(int n) {
+    return n * n;
+}
+void main() {
+    int r = carre(3, 4);
+    print r;
+}
