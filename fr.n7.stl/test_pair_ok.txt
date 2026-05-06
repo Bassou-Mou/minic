@@ -1,0 +1,6 @@
+void main() {
+    <int, boolean> p = <3, true>;
+    int a = fst p;
+    boolean b = snd p;
+    print a;
+}

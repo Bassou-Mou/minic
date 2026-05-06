@@ -6,23 +6,23 @@ STORE (1) 0[SB]
 PUSH 1
 LOADL 1
 STORE (1) 1[SB]
-;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@5479e3f
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@7bfcd12c
 ;(i <= 10)
 debut_boucle_1
 LOAD (1) 1[SB]
 LOADL 10
 SUBR ILeq
 JUMPIF (0) fin_boucle_1
-;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@33e5ccce
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@52d455b8
 ;(sum + i)
 ; sum  = (sum + i);
 
 LOAD (1) 0[SB]
-;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@5a42bbf4
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@4f4a7090
 LOAD (1) 1[SB]
 SUBR IAdd
 STORE (1) 0[SB]
-;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@270421f5
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@18ef96
 ;(i + 1)
 ; i  = (i + 1);
 
@@ -32,9 +32,11 @@ SUBR IAdd
 STORE (1) 1[SB]
 JUMP debut_boucle_1
 fin_boucle_1
-;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@52d455b8
-;PRINT instruction for parameter: sum
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@6956de9
+;PRINT instruction for: sum
 LOAD (1) 0[SB]
 SUBR IOut
+LOADL 10
+SUBR COut
 HALT
 

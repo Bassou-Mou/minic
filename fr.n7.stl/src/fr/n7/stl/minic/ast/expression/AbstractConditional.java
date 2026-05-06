@@ -48,18 +48,25 @@ public class AbstractConditional<ExpressionKind extends Expression> implements E
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#collect(fr.n7.stl.block.ast.scope.Scope)
 	 */
-	@Override
-	public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics collect is undefined in ConditionalExpression.");
-	}
+    @Override
+    public boolean collectAndPartialResolve(HierarchicalScope<Declaration> _scope) {
+        boolean ok = this.condition.collectAndPartialResolve(_scope);
+        ok &= this.thenExpression.collectAndPartialResolve(_scope);
+        ok &= this.elseExpression.collectAndPartialResolve(_scope);
+        return ok;
+    }
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#resolve(fr.n7.stl.block.ast.scope.Scope)
 	 */
-	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-		throw new SemanticsUndefinedException( "Semantics resolve is undefined in ConditionalExpression.");
-	}
+    @Override
+    public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+        boolean ok = this.condition.completeResolve(_scope);
+        ok &= this.thenExpression.completeResolve(_scope);
+        ok &= this.elseExpression.completeResolve(_scope);
+        return ok;
+    }
+
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
@@ -72,17 +79,26 @@ public class AbstractConditional<ExpressionKind extends Expression> implements E
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Expression#getType()
 	 */
-	@Override
-	public Type getType() {
-		throw new SemanticsUndefinedException( "Semantics getType is undefined in ConditionalExpression.");
-	}
+    @Override
+    public Type getType() {
+        return this.thenExpression.getType().merge(this.elseExpression.getType());
+    }
 
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.Expression#getCode(fr.n7.stl.tam.ast.TAMFactory)
 	 */
-	@Override
-	public Fragment getCode(TAMFactory _factory) {
-		throw new SemanticsUndefinedException( "Semantics getCode is undefined in ConditionalExpression.");
-	}
-
+    @Override
+    public Fragment getCode(TAMFactory _factory) {
+        int num = _factory.createLabelNumber();
+        Fragment _fragment = _factory.createFragment();
+        _fragment.append(this.condition.getCode(_factory));
+        _fragment.add(_factory.createJumpIf("cond_else_" + num, 0));
+        _fragment.append(this.thenExpression.getCode(_factory));
+        _fragment.add(_factory.createJump("cond_end_" + num));
+        Fragment elseCode = this.elseExpression.getCode(_factory);
+        elseCode.addPrefix("cond_else_" + num);
+        _fragment.append(elseCode);
+        _fragment.addSuffix("cond_end_" + num);
+        return _fragment;
+    }
 }

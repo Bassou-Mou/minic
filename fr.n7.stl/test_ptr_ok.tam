@@ -1,0 +1,27 @@
+;variable declaration: x
+PUSH 1
+LOADL 42
+STORE (1) 0[SB]
+;variable declaration: p
+PUSH 1
+LOADL 1
+SUBR MAlloc
+STORE (1) 1[SB]
+; p  = &  x ;
+
+LOADA 0[SB]
+STORE (1) 1[SB]
+;variable declaration: y
+PUSH 1
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@490d6c15
+LOAD (1) 1[SB]
+LOADI (1)
+STORE (1) 2[SB]
+;fr.n7.stl.minic.ast.expression.accessible.VariableAccess@7d4793a8
+;PRINT instruction for: y
+LOAD (1) 2[SB]
+SUBR IOut
+LOADL 10
+SUBR COut
+HALT
+

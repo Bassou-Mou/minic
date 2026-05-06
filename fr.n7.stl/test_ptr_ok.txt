@@ -1,0 +1,7 @@
+void main() {
+    int x = 42;
+    int* p = new int();
+    p = &x;
+    int y = *p;
+    print y;
+}

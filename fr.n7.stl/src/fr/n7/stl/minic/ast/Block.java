@@ -97,7 +97,6 @@ public class Block {
                 ok &= instruction.completeResolve(_scope);
             }
             return ok;
-	    // throw new SemanticsUndefinedException("Semantics completeResolve is undefined in Block.");
 	}
 
 	/**
@@ -110,7 +109,6 @@ public class Block {
             ok &= instruction.checkType();
         }
         return ok;
-		// throw new SemanticsUndefinedException("Semantics checkType is undefined in Block.");
 	}
 
 	/**

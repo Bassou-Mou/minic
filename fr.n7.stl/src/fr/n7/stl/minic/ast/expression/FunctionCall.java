@@ -5,7 +5,7 @@ package fr.n7.stl.minic.ast.expression;
 
 import java.util.Iterator;
 import java.util.List;
-
+import fr.n7.stl.minic.ast.instruction.declaration.ParameterDeclaration;
 import fr.n7.stl.minic.ast.SemanticsUndefinedException;
 import fr.n7.stl.minic.ast.expression.accessible.AccessibleExpression;
 import fr.n7.stl.minic.ast.instruction.declaration.FunctionDeclaration;
@@ -17,6 +17,7 @@ import fr.n7.stl.tam.ast.TAMFactory;
 import fr.n7.stl.minic.ast.type.AtomicType;
 import fr.n7.stl.tam.ast.Register;
 import fr.n7.stl.util.Logger;
+import fr.n7.stl.minic.ast.type.FunctionType;
 
 /**
  * Abstract Syntax Tree node for a function call expression.
@@ -95,13 +96,40 @@ public class FunctionCall implements AccessibleExpression {
 	/* (non-Javadoc)
 	 * @see fr.n7.stl.block.ast.expression.Expression#resolve(fr.n7.stl.block.ast.scope.HierarchicalScope)
 	 */
-	@Override
-	public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
-        boolean isValid = true;
-        for (AccessibleExpression _arg : this.arguments) {
-            isValid &= _arg.completeResolve(_scope);
+// Dans fr.n7.stl.minic.ast.expression.FunctionCall
+    @Override
+    public boolean completeResolve(HierarchicalScope<Declaration> _scope) {
+        boolean ok = true;
+
+        for (AccessibleExpression argument : this.arguments) {
+            ok &= argument.completeResolve(_scope);
         }
-        return isValid;
+
+        if (this.function == null) {
+            Logger.error("Semantic error: Function " + this.name + " not resolved.");
+            return false;
+        }
+
+        List<ParameterDeclaration> params = this.function.getParameters();
+        if (this.arguments.size() != params.size()) {
+            Logger.error("Function call error: Number of arguments does not match for '"
+                    + this.function.getName() + "'. Expected " + params.size()
+                    + ", got " + this.arguments.size());
+            ok = false;
+        } else {
+            for (int i = 0; i < this.arguments.size(); i++) {
+                Type actualType   = this.arguments.get(i).getType();
+                Type expectedType = params.get(i).getType();
+                if (!actualType.compatibleWith(expectedType)) {
+                    Logger.error("Function call error: Argument " + (i + 1)
+                            + " type mismatch for '" + this.function.getName()
+                            + "'. Expected " + expectedType + ", got " + actualType);
+                    ok = false;
+                }
+            }
+        }
+
+        return ok;
     }
 	
 	/* (non-Javadoc)

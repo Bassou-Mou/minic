@@ -76,7 +76,6 @@ public class Program {
     		}
             ok &= this.main.collectAndPartialResolve(this.scope);
             return ok;
-	//	throw new SemanticsUndefinedException("Semantics collect is undefined in Program.");
 	}
 	
 	/**
@@ -93,7 +92,6 @@ public class Program {
 		}
 		ok &= this.main.completeResolve(this.scope);
 		return ok;
-		// throw new SemanticsUndefinedException("Semantics completeResolve is undefined in Program.");
 	}
 
 	/**
@@ -107,7 +105,6 @@ public class Program {
 		}
 		ok &= this.main.checkType();
 		return ok;
-		// throw new SemanticsUndefinedException("Semantics checkType is undefined in Program.");
 	}
 
 	/**
